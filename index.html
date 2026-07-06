@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Graduation — an AI venture studio on your desktop</title>
+<meta name="description" content="Three AI agents debate every business idea in the Crucible. Winners graduate, and a team of agents builds them — while you only weigh in on what genuinely needs you." />
+<style>
+  :root{
+    --bg:#fbfbfd; --bg2:#f4f5f7; --panel:#ffffff; --panel2:#f6f7f9; --raise:#e9ebef;
+    --line:rgba(0,0,0,.09); --line2:rgba(0,0,0,.14); --line3:rgba(0,0,0,.22);
+    --ink:#14161b; --ink2:#585f69; --ink3:#8b9099;
+    --accent:#5c6cf5; --accent-press:#4a59e0; --accent-soft:rgba(92,108,245,.1);
+    --purple:#8b5cf6; --green:#17a866; --amber:#c07812; --pink:#e0455f;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+    --r:11px; --r-lg:14px;
+    --shadow:0 1px 2px rgba(18,20,40,.05),0 12px 30px -16px rgba(18,20,40,.14);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+  .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+  h1,h2,h3{font-weight:640;letter-spacing:-.03em;line-height:1.05;margin:0}
+  .accent{color:var(--accent)}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+  .navrow{display:flex;align-items:center;gap:14px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .mark{width:26px;height:26px;flex:none;display:block}
+  .wordmark{font-size:18px;font-weight:640;letter-spacing:-.02em}
+  .navlinks{margin-left:auto;display:flex;align-items:center;gap:26px}
+  .navlinks a{font-size:14px;color:var(--ink2);letter-spacing:-.01em}
+  .navlinks a:hover{color:var(--ink)}
+  .btn{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:560;letter-spacing:-.01em;padding:9px 16px;border-radius:9px;border:1px solid var(--line2);color:var(--ink);white-space:nowrap;cursor:pointer;transition:.14s}
+  .btn:hover{border-color:var(--line3);background:rgba(0,0,0,.03)}
+  .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn-primary:hover{background:var(--accent-press);border-color:var(--accent-press)}
+  .navlinks .btn{padding:8px 14px}
+  @media(max-width:680px){.navlinks a:not(.btn){display:none}}
+
+  /* hero */
+  .hero{padding:74px 0 52px;display:grid;grid-template-columns:1.02fr .98fr;gap:48px;align-items:center}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;padding:52px 0 28px}}
+  .hero h1{font-size:clamp(38px,5.4vw,60px);letter-spacing:-.035em}
+  .hero .lede{color:var(--ink2);font-size:18px;line-height:1.55;margin:24px 0 30px;max-width:34ch}
+  .hero-cta{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .hero-cta .btn{padding:11px 20px;font-size:15px}
+  .hero-note{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink3);margin-top:20px}
+  .hero-note .d{width:6px;height:6px;border-radius:50%;background:var(--green);flex:none}
+
+  /* crucible visual */
+  .crucible{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:15px;box-shadow:0 1px 2px rgba(18,20,40,.05),0 26px 54px -30px rgba(18,20,40,.22)}
+  .cru-top{display:flex;align-items:center;gap:8px;padding:3px 5px 12px;border-bottom:1px solid var(--line)}
+  .lights{display:flex;gap:6px}
+  .lights i{width:10px;height:10px;border-radius:50%}
+  .lights i:nth-child(1){background:#ff5f57} .lights i:nth-child(2){background:#febc2e} .lights i:nth-child(3){background:#28c840}
+  .cru-tag{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+  .cru-live{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+  .cru-live b{width:6px;height:6px;border-radius:50%;background:var(--green)}
+  .cru-idea{font-size:18px;font-weight:560;letter-spacing:-.02em;padding:14px 5px 15px;line-height:1.32}
+  .cru-idea b{color:var(--accent);font-weight:600}
+  .agents3{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .ag{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 10px 12px}
+  .ag h4{margin:0 0 9px;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;font-weight:600;display:flex;align-items:center;gap:6px;text-transform:none}
+  .ag h4 i{width:6px;height:6px;border-radius:50%;flex:none}
+  .ag.r h4{color:var(--accent)} .ag.r h4 i{background:var(--accent)}
+  .ag.p h4{color:var(--purple)} .ag.p h4 i{background:var(--purple)}
+  .ag.c h4{color:var(--pink)} .ag.c h4 i{background:var(--pink)}
+  .ag ul{margin:0;padding:0}
+  .ag li{list-style:none;font-size:11px;color:var(--ink2);line-height:1.42;margin:0 0 6px;padding-left:9px;position:relative}
+  .ag li::before{content:"";position:absolute;left:0;top:6px;width:3px;height:3px;border-radius:50%;background:var(--ink3)}
+  .gauge{display:flex;align-items:center;gap:14px;margin-top:9px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+  .gauge .pct{font-size:23px;font-weight:680;letter-spacing:-.03em}
+  .gauge .pct span{font-size:12px;color:var(--ink2);font-weight:500}
+  .gtrack{position:relative;flex:1;height:6px;border-radius:4px;background:var(--raise)}
+  .gfill{position:absolute;inset:0 22% 0 0;border-radius:4px;background:var(--accent)}
+  .gknob{position:absolute;top:50%;left:78%;width:13px;height:13px;border-radius:50%;background:#fff;border:2px solid var(--accent);transform:translate(-50%,-50%)}
+  .gmood{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);white-space:nowrap}
+
+  /* logo strip / divider line */
+  .rule{height:1px;background:var(--line)}
+
+  /* sections */
+  section{padding:60px 0}
+  .sec-head{max-width:600px;margin-bottom:36px}
+  .sec-head h2{font-size:clamp(27px,3.4vw,38px);margin-top:14px;letter-spacing:-.032em}
+  .sec-head p{color:var(--ink2);font-size:16.5px;margin:15px 0 0;line-height:1.55}
+
+  /* pipeline */
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r-lg);overflow:hidden}
+  @media(max-width:820px){.pipe{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.pipe{grid-template-columns:1fr}}
+  .step{background:var(--panel);padding:24px 22px}
+  .step .n{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.08em}
+  .step h3{font-size:18px;margin:14px 0 9px;letter-spacing:-.02em}
+  .step p{color:var(--ink2);font-size:14px;margin:0;line-height:1.5}
+
+  /* agents grid */
+  .agrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  @media(max-width:820px){.agrid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:460px){.agrid{grid-template-columns:1fr}}
+  .acard{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+  .acard:hover{border-color:var(--line2)}
+  .acard .role{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);display:flex;align-items:center;gap:7px}
+  .acard .role .dot{width:7px;height:7px;border-radius:50%}
+  .acard h3{font-size:16.5px;margin:11px 0 7px;letter-spacing:-.02em}
+  .acard p{color:var(--ink2);font-size:13.5px;margin:0;line-height:1.5}
+
+  /* autonomy band */
+  .band{border:1px solid var(--line);border-radius:var(--r-lg);padding:44px;background:var(--panel)}
+  @media(max-width:760px){.band{padding:28px}}
+  .band .cols{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+  @media(max-width:760px){.band .cols{grid-template-columns:1fr;gap:26px}}
+  .band h2{font-size:clamp(26px,3.2vw,34px);letter-spacing:-.03em}
+  .band p{color:var(--ink2);font-size:16px;margin:16px 0 0;line-height:1.55}
+  .gates{display:flex;flex-direction:column;gap:9px}
+  .gate{display:flex;align-items:center;gap:12px;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:13px 15px;font-size:14px}
+  .gate .k{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent-soft);background:var(--accent-soft);border-radius:6px;padding:3px 8px}
+  .gate .ico{width:8px;height:8px;border-radius:2px;background:var(--accent);flex:none;transform:rotate(45deg)}
+
+  /* pricing */
+  .price-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media(max-width:820px){.price-wrap{grid-template-columns:1fr;max-width:420px;margin:0 auto}}
+  .price{background:var(--panel);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px 24px;display:flex;flex-direction:column}
+  .price.hi{border-color:var(--accent);position:relative}
+  .price.hi::after{content:"Most picked";position:absolute;top:-1px;right:16px;transform:translateY(-50%);font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--accent);border-radius:5px;padding:3px 8px}
+  .price .tier{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2)}
+  .price .amt{font-size:32px;font-weight:680;letter-spacing:-.03em;margin:12px 0 2px}
+  .price .amt span{font-size:14px;color:var(--ink2);font-weight:500;letter-spacing:0}
+  .price .sub{color:var(--ink2);font-size:14px;margin-bottom:20px}
+  .price ul{list-style:none;padding:0;margin:0 0 22px;display:flex;flex-direction:column;gap:11px}
+  .price li{font-size:13.5px;color:var(--ink);line-height:1.4;padding-left:22px;position:relative}
+  .price li::before{content:"";position:absolute;left:1px;top:5px;width:11px;height:7px;border-left:1.6px solid var(--accent);border-bottom:1.6px solid var(--accent);transform:rotate(-45deg)}
+  .price .btn{width:100%;justify-content:center;margin-top:auto}
+
+  /* final cta + footer */
+  .final{padding:70px 0}
+  .final-box{border:1px solid var(--line);border-radius:var(--r-lg);background:var(--panel);padding:52px 44px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap}
+  @media(max-width:640px){.final-box{padding:34px 26px}}
+  .final-box h2{font-size:clamp(26px,3.4vw,34px);letter-spacing:-.03em;max-width:16ch}
+  .final-box p{color:var(--ink2);margin:12px 0 0;font-size:16px;max-width:40ch}
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--ink3);font-size:13px}
+  .footrow{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .footrow a{color:var(--ink2)} .footrow a:hover{color:var(--ink)}
+  .footrow .sp{margin-left:auto}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <linearGradient id="mk" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#6b8bff"/><stop offset="1" stop-color="#a56bff"/>
+  </linearGradient>
+</defs></svg>
+
+<nav>
+  <div class="wrap navrow">
+    <span class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="20" r="17.5" stroke="url(#mk)" stroke-width="1.6"/>
+        <path d="M20 4.5V15.5M20 24.5V35.5M4.5 20H15.5M24.5 20H35.5" stroke="url(#mk)" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M20 16.6c.4 2 1 2.6 3 3.4-2 .8-2.6 1.4-3 3.4-.4-2-1-2.6-3-3.4 2-.8 2.6-1.4 3-3.4Z" fill="url(#mk)"/>
+      </svg>
+      <span class="wordmark">Graduation</span>
+    </span>
+    <div class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#agents">The agents</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-primary" href="#get">Get early access</a>
+    </div>
+  </div>
+</nav>
+
+<header class="wrap hero">
+  <div>
+    <span class="eyebrow">An AI venture studio on your Mac</span>
+    <h1 style="margin-top:18px">Watch AI agents forge business ideas <span class="accent">into existence.</span></h1>
+    <p class="lede">Three agents debate every idea in the Crucible until one is genuinely worth it. Winners graduate — then a team of agents builds them. You only ever weigh in on the few things that truly need a human.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#get">Get early access</a>
+      <a class="btn" href="#how">See how it works</a>
+    </div>
+    <div class="hero-note"><span class="d"></span>Runs on your own Claude subscription. Nothing spends, sends, or signs without your tap.</div>
+  </div>
+
+  <div class="crucible" aria-hidden="true">
+    <div class="cru-top">
+      <span class="lights"><i></i><i></i><i></i></span>
+      <span class="cru-live"><b></b> Live</span>
+      <span class="cru-tag">The Crucible</span>
+    </div>
+    <div class="cru-idea"><b>ClaimRoof</b> — AI writes the roof insurance claim from a single photo.</div>
+    <div class="agents3">
+      <div class="ag r"><h4><i></i>Researcher</h4><ul><li>30M US roof claims a year</li><li>Adjusters are the bottleneck</li><li>Contractors pay per claim</li></ul></div>
+      <div class="ag p"><h4><i></i>Pitch</h4><ul><li>One photo, a filed claim</li><li>$20 a claim, they'll pay</li><li>Speed adjusters can't match</li></ul></div>
+      <div class="ag c"><h4><i></i>Critic</h4><ul><li>Will insurers accept it?</li><li>One carrier pilot moves me</li><li>Then everything follows</li></ul></div>
+    </div>
+    <div class="gauge">
+      <div class="pct">78<span>%</span></div>
+      <div class="gtrack"><div class="gfill"></div><div class="gknob"></div></div>
+      <div class="gmood">Critic warming up</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">How it works</span>
+      <h2>An idea goes in. A running business comes out.</h2>
+      <p>Every idea moves through the same pipeline — debated, graduated, built, and surfaced to you only when it needs you.</p>
+    </div>
+    <div class="pipe">
+      <div class="step"><div class="n">01</div><h3>The Crucible</h3><p>A Researcher scopes the market, a Pitch makes the case, and a Critic tears in — until the Critic is genuinely convinced or the idea is killed.</p></div>
+      <div class="step"><div class="n">02</div><h3>Graduated</h3><p>Ideas that survive the debate land in your portfolio, each rated and tagged by how hands-off it can run.</p></div>
+      <div class="step"><div class="n">03</div><h3>The Workroom</h3><p>A Planner and Executor build the winner — real copy, pages, drafts, deliverables — checking each other's work.</p></div>
+      <div class="step"><div class="n">04</div><h3>Master Inbox</h3><p>Only the handful of things that truly need you — approve, pay, or send — arrive as one-tap decisions with a recommendation.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="agents">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The team</span>
+      <h2>A studio of agents, each with one job.</h2>
+      <p>They run on your Claude subscription and hand off to each other automatically — from first idea to a portfolio that manages itself.</p>
+    </div>
+    <div class="agrid">
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--accent)"></span>Seeds the ideas</div><h3>Framer</h3><p>Proposes fresh, specific, non-derivative business ideas across markets.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--accent)"></span>Scopes the market</div><h3>Researcher</h3><p>Finds who wants it, real proof of demand, and what competitors already do.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--purple)"></span>Makes the case</div><h3>Pitch</h3><p>The optimistic founder — who pays, the wedge, and why it becomes a company.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--pink)"></span>Tears in</div><h3>Critic</h3><p>The tough investor. Only genuinely convincing ideas graduate — and it rates each one.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--purple)"></span>Maps the build</div><h3>Planner</h3><p>Breaks a graduated idea into concrete steps and splits agent-work from what needs you.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--accent)"></span>Builds it</div><h3>Executor</h3><p>Does the real work — research, copy, drafts, deliverables — live on the web.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--amber)"></span>Watches the portfolio</div><h3>Warden</h3><p>Ranks every idea, restarts stalled winners, and concentrates effort on what's working.</p></div>
+      <div class="acard"><div class="role"><span class="dot" style="background:var(--green)"></span>Preps your inbox</div><h3>Scribe</h3><p>Pre-writes the step-by-step and ready-to-send drafts before you ever open a task.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="band">
+      <div class="cols">
+        <div>
+          <span class="eyebrow">Autonomy, with a hand on the wheel</span>
+          <h2 style="margin-top:12px">It runs itself. You approve what matters.</h2>
+          <p>Dial it from Hands-on to full Autopilot. Either way, four things always stay your one-tap call — because they should.</p>
+        </div>
+        <div class="gates">
+          <div class="gate"><span class="ico"></span>Paying money or subscribing<span class="k">your tap</span></div>
+          <div class="gate"><span class="ico"></span>Sending a message as you<span class="k">your tap</span></div>
+          <div class="gate"><span class="ico"></span>Signing or legally approving<span class="k">your tap</span></div>
+          <div class="gate"><span class="ico"></span>Anything irreversible<span class="k">your tap</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Pricing</span>
+      <h2>Pick your seat.</h2>
+      <p>Every tier runs the full Crucible. You scale up when you're building more at once.</p>
+    </div>
+    <div class="price-wrap">
+      <div class="price">
+        <div class="tier">Standard-Tier</div>
+        <div class="amt">$149.99<span> /mo</span></div>
+        <div class="sub">The core engine.</div>
+        <ul>
+          <li>The Crucible — 3 agents debate ideas live</li>
+          <li>Up to 5 Workrooms building at once</li>
+          <li>One market focus</li>
+          <li>Master Inbox — approve only what needs you</li>
+          <li>Auto-pilot</li>
+        </ul>
+        <a class="btn" href="#get">Get early access</a>
+      </div>
+      <div class="price hi">
+        <div class="tier">Pro-Tier</div>
+        <div class="amt">$249.99<span> /mo</span></div>
+        <div class="sub">For serious builders.</div>
+        <ul>
+          <li>Everything in Standard-Tier</li>
+          <li>Up to 15 Workrooms at once</li>
+          <li>Multi-market rotation + custom niches</li>
+          <li>Live browser agents — research &amp; build on the real web</li>
+          <li>Sharper agents (top-tier models)</li>
+          <li>Background engine — keeps running while closed</li>
+        </ul>
+        <a class="btn btn-primary" href="#get">Get early access</a>
+      </div>
+      <div class="price">
+        <div class="tier">S-Tier</div>
+        <div class="amt">$399.99<span> /mo</span></div>
+        <div class="sub">Founder's seat. The world is yours.</div>
+        <ul>
+          <li>Everything in Pro-Tier</li>
+          <li>Unlimited Workrooms at once</li>
+          <li>All markets + unlimited custom niches</li>
+          <li>Max agent horsepower (Opus on every agent)</li>
+          <li>Personal projects hub</li>
+          <li>Priority queue + first access</li>
+        </ul>
+        <a class="btn" href="#get">Get early access</a>
+      </div>
+    </div>
+    <p style="color:var(--ink3);font-size:13px;margin-top:20px">Prices in USD. Runs on your own Claude subscription. Early access is limited while we onboard the first users.</p>
+  </div>
+</section>
+
+<section id="get" class="final">
+  <div class="wrap">
+    <div class="final-box">
+      <div>
+        <span class="eyebrow">Early access</span>
+        <h2 style="margin-top:12px">Put a studio of agents to work on your next idea.</h2>
+        <p>Graduation is in early access for Mac. Request access and we'll send you the download.</p>
+      </div>
+      <a class="btn btn-primary" href="mailto:hello@graduationapp.com?subject=Graduation%20early%20access" style="padding:13px 24px;font-size:15px">Request access</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footrow">
+    <span class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true" style="width:20px;height:20px">
+        <circle cx="20" cy="20" r="17.5" stroke="url(#mk)" stroke-width="1.6"/>
+        <path d="M20 4.5V15.5M20 24.5V35.5M4.5 20H15.5M24.5 20H35.5" stroke="url(#mk)" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M20 16.6c.4 2 1 2.6 3 3.4-2 .8-2.6 1.4-3 3.4-.4-2-1-2.6-3-3.4 2-.8 2.6-1.4 3-3.4Z" fill="url(#mk)"/>
+      </svg>
+      <span style="font-size:14px;color:var(--ink2);font-weight:560">Graduation</span>
+    </span>
+    <a href="#how">How it works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="mailto:hello@graduationapp.com">hello@graduationapp.com</a>
+    <span class="sp">© 2026 Graduation · A desktop app for macOS</span>
+  </div>
+</footer>
+
+</body>
+</html>
