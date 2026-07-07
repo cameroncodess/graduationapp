@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — Graduation</title>
+<meta name="description" content="How Graduation, a local-first desktop app, handles your data — including Gmail and Google Drive access under the Google API Services User Data Policy." />
+<style>
+  :root{
+    --bg:#fbfbfd; --panel:#ffffff; --line:rgba(0,0,0,.09); --line2:rgba(0,0,0,.14);
+    --ink:#14161b; --ink2:#585f69; --ink3:#8b9099;
+    --accent:#5c6cf5;
+    --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Segoe UI",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","SFMono-Regular",Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 26px}
+
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);border-bottom:1px solid var(--line)}
+  .navrow{display:flex;align-items:center;gap:14px;height:60px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .mark{width:26px;height:26px;flex:none;display:block}
+  .wordmark{font-size:18px;font-weight:640;letter-spacing:-.02em;color:var(--ink)}
+  .navlinks{margin-left:auto;display:flex;align-items:center;gap:26px}
+  .navlinks a{font-size:14px;color:var(--ink2);letter-spacing:-.01em}
+  .navlinks a:hover{color:var(--ink);text-decoration:none}
+
+  .doc{max-width:740px;margin:0 auto;padding:56px 26px 96px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+  h1{font-size:clamp(30px,4.4vw,40px);font-weight:640;letter-spacing:-.03em;line-height:1.08;margin:14px 0 8px}
+  .updated{color:var(--ink3);font-size:14px;margin-bottom:34px}
+  h2{font-size:20px;font-weight:620;letter-spacing:-.02em;margin:38px 0 10px}
+  p{color:var(--ink2);margin:0 0 14px}
+  ul{color:var(--ink2);margin:0 0 14px;padding-left:22px}
+  li{margin:0 0 8px}
+  strong{color:var(--ink);font-weight:600}
+  .callout{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:18px 0}
+  .callout p{margin:0}
+
+  footer{border-top:1px solid var(--line);padding:26px 0}
+  .footrow{display:flex;align-items:center;gap:22px;flex-wrap:wrap;color:var(--ink3);font-size:13px}
+  .footrow a{color:var(--ink2)}
+  .sp{margin-left:auto}
+  @media(max-width:680px){.sp{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap navrow">
+    <a class="brand" href="/">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+        <circle cx="20" cy="20" r="17.5" stroke="#5c6cf5" stroke-width="1.6"/>
+        <path d="M20 4.5V15.5M20 24.5V35.5M4.5 20H15.5M24.5 20H35.5" stroke="#5c6cf5" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M20 16.6c.4 2 1 2.6 3 3.4-2 .8-2.6 1.4-3 3.4-.4-2-1-2.6-3-3.4 2-.8 2.6-1.4 3-3.4Z" fill="#5c6cf5"/>
+      </svg>
+      <span class="wordmark">Graduation</span>
+    </a>
+    <div class="navlinks">
+      <a href="/#how">How it works</a>
+      <a href="/#pricing">Pricing</a>
+    </div>
+  </div>
+</nav>
+
+<main class="doc">
+  <span class="eyebrow">Legal</span>
+  <h1>Privacy Policy</h1>
+  <p class="updated">Last updated July 6, 2026</p>
+
+  <p>Graduation is a desktop application that runs on your own Mac. It is local first, which means the ideas you explore, the projects the agents build, and the work they produce all live in a folder on your own computer. We do not run a server that collects or stores the content you create in the app. This policy explains the limited information we do handle and exactly how Graduation uses the Google permissions you may choose to grant it.</p>
+
+  <h2>Information Graduation handles</h2>
+  <ul>
+    <li><strong>Billing and license.</strong> When you buy a license, payment is handled by our payment provider. We receive your email address and whether your license is active. We never see or store your card number.</li>
+    <li><strong>Local app data.</strong> Your ideas, debates, projects, and deliverables are stored on your Mac. You can delete any of it at any time from your own machine.</li>
+    <li><strong>AI processing.</strong> The app runs on your own Claude subscription or your own API key. When the agents run, the relevant text is sent to Anthropic to generate responses under your own agreement with Anthropic. If you add an optional OpenAI key, image prompts are sent to OpenAI to generate images.</li>
+  </ul>
+
+  <h2>How Graduation uses Google data</h2>
+  <p>Connecting a Google service is always your choice, and each connection asks only for the narrowest permission needed.</p>
+  <ul>
+    <li><strong>Gmail.</strong> If you connect Gmail, Graduation requests the send only permission. This lets it send an email that you have reviewed and approved with a tap. Graduation cannot read, search, or delete any of your email. It only sends the specific message you approve.</li>
+    <li><strong>Google Drive.</strong> If you connect Drive, Graduation requests the drive.file permission. This lets it save the deliverables it produces into your Drive and reopen files it created there. Graduation cannot see or touch any other files in your Drive.</li>
+    <li><strong>Your authorization.</strong> The token that lets Graduation perform these actions is stored on your own Mac and used only for the actions above. Disconnecting a service from the app removes that token, and you can also revoke access anytime in your Google Account settings.</li>
+  </ul>
+
+  <div class="callout">
+    <p>Graduation's use and transfer of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+  </div>
+
+  <h2>How we use information</h2>
+  <p>We use your billing details only to provide and support your license. We do not sell your data. We do not use your Google data for advertising, we do not use it to train models, and we do not transfer it to anyone except as needed to carry out the action you asked for, such as sending an email you approved.</p>
+
+  <h2>Data retention and deletion</h2>
+  <p>Local data stays on your Mac until you delete it. Disconnecting a connector removes its stored token right away. For billing records or any deletion request, email us and we will take care of it.</p>
+
+  <h2>Children</h2>
+  <p>Graduation is not directed at children under 13 and is not intended for their use.</p>
+
+  <h2>Changes to this policy</h2>
+  <p>We may update this policy as the app evolves. The date at the top always reflects the most recent version.</p>
+
+  <h2>Contact</h2>
+  <p>Questions about this policy or your data can go to <a href="mailto:graduationapphelp@gmail.com">graduationapphelp@gmail.com</a>.</p>
+</main>
+
+<footer>
+  <div class="wrap footrow">
+    <span class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" aria-hidden="true" style="width:20px;height:20px">
+        <circle cx="20" cy="20" r="17.5" stroke="#5c6cf5" stroke-width="1.6"/>
+        <path d="M20 4.5V15.5M20 24.5V35.5M4.5 20H15.5M24.5 20H35.5" stroke="#5c6cf5" stroke-width="1.4" stroke-linecap="round"/>
+        <path d="M20 16.6c.4 2 1 2.6 3 3.4-2 .8-2.6 1.4-3 3.4-.4-2-1-2.6-3-3.4 2-.8 2.6-1.4 3-3.4Z" fill="#5c6cf5"/>
+      </svg>
+      <span style="font-size:14px;color:var(--ink2);font-weight:560">Graduation</span>
+    </span>
+    <a href="/#how">How it works</a>
+    <a href="/#pricing">Pricing</a>
+    <a href="mailto:graduationapphelp@gmail.com">graduationapphelp@gmail.com</a>
+    <span class="sp">© 2026 Graduation · A desktop app for macOS</span>
+  </div>
+</footer>
+
+</body>
+</html>
